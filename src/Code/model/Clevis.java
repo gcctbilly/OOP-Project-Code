@@ -4,7 +4,7 @@ import java.util.HashMap;
 import Code.model.shape.Shape;
 
 public class Clevis {
-    private HashMap<String, Integer> storage;
+    private HashMap<String, Shape> storage;
 
     public Clevis(){
         storage = new HashMap<>();
