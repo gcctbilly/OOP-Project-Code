@@ -10,12 +10,21 @@ public class Application {
         Scanner input = new Scanner(System.in);
         String command;
         // Initialize and utilize the system
-        System.out.println("Thanks for using Clevis");
+        System.out.println("Welcome for using Clevis");
+        while (true) {
+            System.out.println("Please enter the name of the log files like 'java Clevis-html log.html -txt log.txt' : ");
+            command = input.nextLine();
+            int number = clevis.process(command);
+            if(number == 1) break;
+        }
+
         while(true) {
             System.out.print("Please enter the command: ");
             command = input.nextLine();
-            clevis.process(command);
+            int number = clevis.process(command);
+            if(number == 2) break;
         }
+        System.out.println("Thanks for using!");
 
     }
 

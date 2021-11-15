@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Iterator;
+import java.io.*;
 
 import Code.model.shape.*;
 
 public class Clevis {
     private HashMap<String, Shape> storage;
+    String filePathHtml;
+    String filePathTxt;
 
     public Clevis(){
         storage = new HashMap<>();
@@ -18,6 +21,7 @@ public class Clevis {
     //return 0 for wrong input and 1 for success execute 2 for quit
     public int process(String command) {
         command = command.trim();
+        writeFileTxt(command);
         if(command.length() == 0) {
             System.out.println("There is no command");
             return 0;
@@ -220,6 +224,15 @@ public class Clevis {
             listAll();
             return 1;
         }
+        else if(commands[0].equals("java")){
+            if(commands.length != 5){
+                System.out.println("Please enter the right command");
+                return 0;
+            }
+            createFile(commands[2],commands[4]);
+            return 1;
+
+        }
         else if(commands[0].equals("quit")){
             if (commands.length != 1) {
                 System.out.println("Please enter the right command");
@@ -232,6 +245,36 @@ public class Clevis {
 
 
     }
+
+    public void createFile(String nameHtml, String nameTxt) {
+        filePathHtml = nameHtml;
+        filePathTxt =  nameTxt;
+        File newFil1 = new File(filePathHtml);
+        File newFil2 = new File(filePathTxt);
+        try{
+            newFil1.createNewFile();
+            newFil2.createNewFile();
+            System.out.println("file created");
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void writeFileTxt(String command) {
+        try {
+            FileWriter fw = new FileWriter(filePathTxt,true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.append(command + '\n');
+            bw.close();
+            fw.close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
 
     // This method receive information of rectangle and add rectangle to storage
     // can not create if the name has existed;
