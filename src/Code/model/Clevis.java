@@ -37,6 +37,33 @@ public class Clevis {
     // the shape that will be grouped will not exist in the storage
     // can not create if the name has existed;
     public void createGroup(String name, String[] addName) {
+        List<Shape> Arr= new ArrayList<>() ;//group里面自带的List（可能含group的list）
+        List<Shape> All_Shape=new ArrayList<>() ;//group里的仅包含单个元素的List
+        Shape temp;
+
+        for(String a: addName){
+            Arr.add(storage.get(a) );//给自带List赋值
+        }
+
+
+        for(String a: addName){
+            if(storage.get(a).getClass().getName()=="Group" ){
+                temp=(Group)storage.get(a);
+                All_Shape.addAll(((Group) temp).All_Shape ); //给仅包含单个Shape的List赋值
+            }
+            else{
+                All_Shape .add(storage .get(a) );
+            }
+        }
+
+        Group A=new Group(name,Arr,All_Shape );//得到目前的Group
+
+        storage.put(name,A);//向storage里存值
+
+
+        for(String a : addName ){
+            storage.remove(a); //删除所有的key
+        }
     }
 
     // This method receive name of a group
