@@ -23,6 +23,8 @@ public class Circle extends Shape{
 
     //move dx and dy for this objective
     public void move(double dx, double dy){
+        this.x=dx;
+        this.y=dy;
 
     }
 
