@@ -372,8 +372,15 @@ public class Clevis {
     // can not ungroup if the name does not exist or it is not a group
     //return 0 for fail and 1 for success
 
-    public int unGroup(String name) {
-        return 1;
+   public void unGroup(String name) {
+        Shape A=storage .get(name);
+        if(A.getClass().getName().equals("Group") ){
+            Group B=(Group)A;
+            for(String a:B.getShapes() .keySet() ){
+                storage.put(a,B.getShapes().get(a) ); 
+            }
+        }
+        storage .remove(name); 
 
     }
 
