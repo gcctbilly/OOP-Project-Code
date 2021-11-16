@@ -37,10 +37,6 @@ public class Clevis {
                 System.out.println("Please enter the right command");
                 return 0;
             }
-            if(!isAllLetter(commands[1])) {
-                System.out.println("Please enter the right name");
-                return 0;
-            }
             else if(!isAllNumber(commands[2]) || !isAllNumber(commands[3]) || !isAllNumber(commands[4]) || !isAllNumber(commands[5])) {
                 System.out.println("Please enter the right number");
                 return 0;
@@ -55,10 +51,6 @@ public class Clevis {
         else if(commands[0].equals("line")){
             if(commands.length != 6) {
                 System.out.println("Please enter the right command");
-                return 0;
-            }
-            if(!isAllLetter(commands[1])) {
-                System.out.println("Please enter the right name");
                 return 0;
             }
             else if(!isAllNumber(commands[2]) || !isAllNumber(commands[3]) || !isAllNumber(commands[4]) || !isAllNumber(commands[5])) {
@@ -77,10 +69,6 @@ public class Clevis {
                 System.out.println("Please enter the right command");
                 return 0;
             }
-            if(!isAllLetter(commands[1])) {
-                System.out.println("Please enter the right name");
-                return 0;
-            }
             else if(!isAllNumber(commands[2]) || !isAllNumber(commands[3]) || !isAllNumber(commands[4])) {
                 System.out.println("Please enter the right number");
                 return 0;
@@ -96,10 +84,6 @@ public class Clevis {
                 System.out.println("Please enter the right command");
                 return 0;
             }
-            if(!isAllLetter(commands[1])) {
-                System.out.println("Please enter the right name");
-                return 0;
-            }
             else if(!isAllNumber(commands[2]) || !isAllNumber(commands[3]) || !isAllNumber(commands[4])) {
                 System.out.println("Please enter the right number");
                 return 0;
@@ -111,12 +95,6 @@ public class Clevis {
             return createSquare(name,x,y,l);
         }
         else if(commands[0].equals("group")) {
-            for(int i = 1; i<commands.length; i++) {
-                if (!isAllLetter(commands[i])){
-                    System.out.println("Please enter the right name");
-                    return 0;
-                }
-            }
             String name = commands[1];
             String addName[] = new String[commands.length-2];
             for(int i = 0; i < commands.length-2; i++) {
@@ -130,10 +108,6 @@ public class Clevis {
                 System.out.println("Please enter the right command");
                 return 0;
             }
-            if(!isAllLetter(commands[1])) {
-                System.out.println("Please enter the right name");
-                return 0;
-            }
             String name = commands[1];
             unGroup(name);
             return 1;
@@ -141,10 +115,6 @@ public class Clevis {
         else if (commands[0].equals("delete")){
             if (commands.length != 2) {
                 System.out.println("Please enter the right command");
-                return 0;
-            }
-            if(!isAllLetter(commands[1])) {
-                System.out.println("Please enter the right name");
                 return 0;
             }
             String name = commands[1];
@@ -155,20 +125,12 @@ public class Clevis {
                 System.out.println("Please enter the right command");
                 return 0;
             }
-            if(!isAllLetter(commands[1])) {
-                System.out.println("Please enter the right name");
-                return 0;
-            }
             String name = commands[1];
             return boundingBox(name);
         }
         else if(commands[0].equals("move")) {
             if(commands.length != 4) {
                 System.out.println("Please enter the right command");
-                return 0;
-            }
-            if(!isAllLetter(commands[1])) {
-                System.out.println("Please enter the right name");
                 return 0;
             }
             else if(!isAllNumber(commands[2]) || !isAllNumber(commands[3])) {
@@ -200,22 +162,15 @@ public class Clevis {
                 System.out.println("Please enter the right command");
                 return 0;
             }
-            if(!isAllLetter(commands[1])|| !isAllLetter(commands[2])) {
-                System.out.println("Please enter the right name");
-                return 0;
-            }
             String name1 = commands[1];
             String name2 = commands[2];
-            intersect(name1,name2);
-            return 1;
+            boolean isSuccess = intersect(name1,name2);
+            if(isSuccess) return 1;
+            return 0;
         }
         else if(commands[0].equals("list")){
             if(commands.length != 2) {
                 System.out.println("Please enter the right command");
-                return 0;
-            }
-            if(!isAllLetter(commands[1])) {
-                System.out.println("Please enter the right name");
                 return 0;
             }
             String name = commands[1];
@@ -228,14 +183,6 @@ public class Clevis {
             }
             listAll();
             return 1;
-        }
-        else if(commands[0].equals("java")){
-            if(commands.length != 5){
-                System.out.println("Please enter the right command");
-                return 0;
-            }
-            return createFile(commands[2],commands[4]);
-
         }
         else if(commands[0].equals("quit")){
             if (commands.length != 1) {
@@ -497,12 +444,13 @@ public class Clevis {
     //print out whether the two shapes is intersected
     //can not print if one of the name can not find the shape
     //return 0 for fail and 1 for success
-    public int intersect(String name1, String name2) {
+    public boolean intersect(String name1, String name2) {
         if(!storage.containsKey(name1) || !storage.containsKey(name2)) {
             System.out.println("There is no such shapes");
-            return 0;
+            return false;
         }
-        return 1;
+
+        return true;
 
     }
 
@@ -629,18 +577,22 @@ public class Clevis {
 
     }
 
-    //This method will return shape contain the point(x,y)
+    //This method will return shape with biggest z-order contain the point(x,y)
     //return null if no
     public Shape findShape(double x, double y){
+        ArrayList<Shape> shapes = new ArrayList<>();
         Shape currentShape = null;
         Iterator it = storage.values().iterator();
         while (it.hasNext()){
             currentShape = (Shape) it.next();
             if(currentShape.isContainPoint(x,y)) {
-                return currentShape;
+                shapes.add(currentShape);
             }
         }
-        return null;
+        if(shapes.isEmpty()) return null;
+        Shape[] shapesList  = shapes.toArray(new Shape[0]);
+        mergeSort(shapesList,0,shapesList.length-1);
+        return shapesList[0];
 
     }
 
@@ -666,13 +618,6 @@ public class Clevis {
         return null;
     }
 
-    public boolean isAllLetter(String str) {
-        char[] a = str.toCharArray();
-        for(int i = 0 ; i< a.length; i++) {
-            if(a[i] < 'A' || (a[i] > 'Z' && a[i] < 'a') || a[i] > 'z') return false;
-        }
-        return true;
-    }
 
     public boolean isAllNumber(String str) {
         char[] a = str.toCharArray();
