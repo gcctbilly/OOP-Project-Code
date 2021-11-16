@@ -1,8 +1,8 @@
 package Code.model;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Iterator;
 import java.io.*;
 
@@ -10,8 +10,9 @@ import Code.model.shape.*;
 
 public class Clevis {
     private HashMap<String, Shape> storage;
-    String filePathHtml;
-    String filePathTxt;
+    private String filePathHtml ="";
+    private String filePathTxt = "";
+    private int operationIndex = 0;
 
     public Clevis(){
         storage = new HashMap<>();
@@ -21,7 +22,11 @@ public class Clevis {
     //return 0 for wrong input and 1 for success execute 2 for quit
     public int process(String command) {
         command = command.trim();
-        writeFileTxt(command);
+        if(!filePathTxt.equals("") && !filePathHtml.equals("")) {
+            operationIndex++;
+            writeFileTxt(command);
+            writeFileHtml(command);
+        }
         if(command.length() == 0) {
             System.out.println("There is no command");
             return 0;
@@ -229,8 +234,7 @@ public class Clevis {
                 System.out.println("Please enter the right command");
                 return 0;
             }
-            createFile(commands[2],commands[4]);
-            return 1;
+            return createFile(commands[2],commands[4]);
 
         }
         else if(commands[0].equals("quit")){
@@ -246,20 +250,28 @@ public class Clevis {
 
     }
 
-    public void createFile(String nameHtml, String nameTxt) {
+    //create the file 1 for success 0 for fail
+    public int createFile(String nameHtml, String nameTxt) {
         filePathHtml = nameHtml;
         filePathTxt =  nameTxt;
         File newFil1 = new File(filePathHtml);
         File newFil2 = new File(filePathTxt);
+        if(newFil1.exists() || newFil2.exists()) {
+            System.out.println("The file has already existed. Please enter the other file name");
+            return 0;
+        }
         try{
             newFil1.createNewFile();
             newFil2.createNewFile();
+            initialHtml();
             System.out.println("file created");
         }catch (IOException e){
             e.printStackTrace();
         }
+        return 1;
     }
 
+    //write command in the txt
     public void writeFileTxt(String command) {
         try {
             FileWriter fw = new FileWriter(filePathTxt,true);
@@ -270,7 +282,38 @@ public class Clevis {
         }catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    //initialize the html file
+    public void initialHtml() {
+        File file = new File(filePathHtml);
+        try{
+            RandomAccessFile random = new RandomAccessFile(file,"rw");
+            String content = "<table><thead><tr><td>Index</td><td>Command</td></tr></thead><tbody></tbody></table>";
+            random.write(content.getBytes(StandardCharsets.UTF_8));
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //write command in the html
+    public void writeFileHtml(String command) {
+        File file = new File(filePathHtml);
+        try{
+            RandomAccessFile randomFile = new RandomAccessFile(file,"rw");
+            long fileLength = randomFile.length();
+            randomFile.seek(fileLength-16);
+            //store the remained content in order to add back after write
+            String remained = randomFile.readLine();
+            randomFile.seek(fileLength-16);
+            String processedCommand = "<tr><td>"+operationIndex +"</td><td>" + command + "</td></tr>";
+            randomFile.write((processedCommand+remained).getBytes(StandardCharsets.UTF_8));
+
+            System.out.println(fileLength);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -372,15 +415,20 @@ public class Clevis {
     // can not ungroup if the name does not exist or it is not a group
     //return 0 for fail and 1 for success
 
-   public void unGroup(String name) {
-        Shape A=storage .get(name);
-        if(A.getClass().getName().equals("Group") ){
+   public int unGroup(String name) {
+        if(!storage.containsKey(name)){
+            System.out.println("The group does not exist");
+            return 0;
+        }
+        Shape A=storage.get(name);
+        if(A.getClass().getSimpleName().equals("Group") ){
             Group B=(Group)A;
             for(String a:B.getShapes() .keySet() ){
                 storage.put(a,B.getShapes().get(a) ); 
             }
         }
-        storage .remove(name); 
+        storage.remove(name);
+        return 1;
 
     }
 
