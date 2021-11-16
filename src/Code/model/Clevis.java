@@ -444,15 +444,230 @@ public class Clevis {
     //print out whether the two shapes is intersected
     //can not print if one of the name can not find the shape
     //return 0 for fail and 1 for success
-    public boolean intersect(String name1, String name2) {
+    public boolean  intersect(String name1, String name2) {
         if(!storage.containsKey(name1) || !storage.containsKey(name2)) {
             System.out.println("There is no such shapes");
             return false;
         }
+        Shape sha1=storage.get(name1);
+        Shape sha2=storage.get(name2);
+        if(sha1 instanceof Line){
+            Line lin=(Line)sha1;
+            if(sha2 instanceof Line ){
+                Line temp=(Line)sha2;
+                return intersectLineLine(lin,temp);
+            }
+            if(sha2 instanceof Circle ){
+                Circle temp=(Circle)sha2 ;
+                return intersectLineCircle(lin,temp);
+            }
+            if(sha2 instanceof Rectangle ){
+                Rectangle temp=(Rectangle)sha2;
+                return intersectLineRectangle(lin,temp);
+            }
+            if(sha2 instanceof Square ){
+                Square temp=(Square)  sha2;
+                return intersectLineSquare(lin,temp);
+            }
+        }
+        if(sha1 instanceof Circle ){
+            Circle  cir=(Circle)  sha1;
+            if(sha2 instanceof Line ){
+                Line temp=(Line)sha2;
+                return intersectLineCircle(temp,cir) ;
+            }
+            if(sha2 instanceof Circle ){
+                Circle temp=(Circle)sha2 ;
+                return intersectCircleCircle(cir,temp);
+            }
+            if(sha2 instanceof Rectangle ){
+                Rectangle temp=(Rectangle)sha2;
+                return intersectCircleRectangle(cir,temp);
+            }
+            if(sha2 instanceof Square ){
+                Square temp=(Square)  sha2;
+                return intersectCircleSquare(cir,temp);
+            }
+        }
+        if(sha1 instanceof Rectangle  ) {
+            Rectangle  rec = (Rectangle)  sha1;
+            if (sha2 instanceof Line) {
+                Line temp = (Line) sha2;
+                return intersectLineRectangle(temp, rec) ;
+            }
+            if (sha2 instanceof Circle) {
+                Circle temp = (Circle) sha2;
+                return intersectCircleRectangle(temp, rec) ;
+            }
+            if (sha2 instanceof Rectangle) {
+                Rectangle temp = (Rectangle) sha2;
+                return intersectRectangleRectangle(rec, temp);
+            }
+            if (sha2 instanceof Square) {
+                Square temp = (Square) sha2;
+                return intersectSquareRectangle(temp, rec) ;
+            }
+        }
+        if(sha1 instanceof Square ) {
+            Square squ = (Square) sha1;
+            if (sha2 instanceof Line) {
+                Line temp = (Line) sha2;
+                return intersectLineSquare(temp, squ);
+            }
+            if (sha2 instanceof Circle) {
+                Circle temp = (Circle) sha2;
+                return intersectCircleSquare(temp, squ);
+            }
+            if (sha2 instanceof Rectangle) {
+                Rectangle temp = (Rectangle) sha2;
+                return intersectSquareRectangle(squ, temp);
+            }
+            if (sha2 instanceof Square) {
+                Square temp = (Square) sha2;
+                return intersectSquareSquare(squ, temp);
+            }
+        }
+        else if(sha1 instanceof Group && !(sha2 instanceof Group )){
+            Group temp=(Group)  sha1;
+            for(String a: temp.getAllShapes() .keySet() ){
+                storage .put(a,temp.getAllShapes().get(a) );
+                if(intersect(a, name2)){
+                    storage .remove(a);
+                    return true;
+                }
+                storage .remove(a);
+            }
+        }
+        else if(sha2 instanceof Group && !(sha1 instanceof Group )){
+            Group temp=(Group)  sha2;
+            for(String a: temp.getAllShapes() .keySet() ){
+                storage .put(a,temp.getAllShapes().get(a) );
+                if(intersect(a, name2)){
+                    storage .remove(a);
+                    return true;
+                }
+                storage .remove(a);
+            }
+        }
 
+        else if(sha1 instanceof Group && (sha2 instanceof Group )){
+            Group temp1=(Group)  sha1;
+            Group temp2=(Group) sha2 ;
+            for(String a:temp1.getAllShapes() .keySet() ){
+                storage .put(a,temp1 .getAllShapes() .get(a) );
+                for(String b:temp2.getAllShapes() .keySet() ){
+                    storage .put(b,temp2.getAllShapes() .get(b) );
+                    if(intersect(a,b) ){
+                        storage .remove(b);
+                        storage .remove(a);
+                        return true;
+                    }
+                }
+                storage .remove(a);
+            }
+        }
+        return false;
+    }
+    
+    
+    public boolean intersectLineLine(Line line1,Line line2){
+        if(Math.max(line1.getX1() ,line1.getX2() )<Math .min(line2.getX1(),line2.getX2()) ||
+                Math .max(line1.getY1() ,line1.getY2() )<Math .min(line2.getY1() ,line2.getY2() ) ||
+                Math .max(line2.getY1() ,line2.getY2() )<Math .min(line1.getY1() ,line1.getY2() )||
+                Math.max(line2.getX1() ,line2.getX2() )<Math .min(line1.getX1(),line1.getX2()) ){
+            return false;
+        }
+        if ((((line1.getX1() - line2.getX1()) * (line2.getY2() - line2.getY1()) - (line1.getY1() - line2.getY1()) * (line2.getX2() - line2.getX1()))
+                * ((line1.getX2() - line2.getX1()) * (line2.getY2() - line2.getY1()) - (line1.getY2() - line2.getY1()) * (line2.getX2() - line2.getX1()))) > 0
+                || (((line2.getX1() - line1.getX1()) * (line1.getY2() - line1.getY1()) - (line2.getY1() - line1.getY1()) * (line1.getX2() - line1.getX1()))
+                * ((line2.getX2() - line1.getX1()) * (line1.getY2() - line1.getY1()) - (line2.getY2() - line1.getY1()) * (line1.getX2() - line1.getX1()))) > 0)
+        {
+            return false;
+        }
         return true;
 
     }
+    public boolean intersectLineCircle(Line line,Circle cir){
+        boolean flag1=(Math .pow(cir .getX() -line .getX1(),2 )+Math .pow(cir .getY() -line .getY1() ,2) )<Math .pow(cir.getR(),2);
+        boolean flag2=(Math .pow(cir .getX() -line .getX2(),2 )+Math .pow(cir .getY() -line .getY2() ,2) )<Math .pow(cir.getR(),2);
+        if(flag1 &&flag2 ){
+            return false;
+        }else if(flag1 || flag2 ){
+            return true;
+        }else{
+            double A,B,C,dist1,dist2,angle1,angle2;
+            A=line.getY1() -line.getY2() ;
+            B=line.getX2() -line.getX1() ;
+            C=line.getX1() *line.getY2() -line.getX2() *line.getY1() ;
+            dist1=A*cir .getX() +B* cir.getY()+C;
+            dist1= Math.pow(dist1 ,2);
+            dist2=(Math .pow(A,2)+Math .pow(B,2) )* Math.pow(cir.getR() ,2);
+            if(dist1 >dist2 ){
+                return false;
+            }
+            angle1 =(cir .getX() -line .getX1() )*(line .getX2() -line.getX1() )+(cir .getY() -line.getY1() )*(line .getY2() -line.getY1() );
+            angle2 =(cir .getX() -line .getX2() )*(line .getX1() -line.getX2() )+(cir .getY() -line.getY2() )*(line .getY1() -line.getY2() );
+            if(angle1 >0&&angle2 >0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+    public boolean intersectCircleCircle(Circle cir1,Circle cir2){
+        double dist= Math.pow(Math .pow(cir1.getX()-cir2.getX() ,2)+ Math.pow(cir1.getY()- cir2.getY(),2),0.5);
+        double maxR= Math.max(cir1 .getR() ,cir2 .getR() );
+        double minR= Math.min(cir1.getR() , cir2.getR());
+        if(dist>maxR -minR && dist<maxR +minR ){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+    public boolean intersectLineRectangle(Line line,Rectangle rec){
+        Line temp1=new Line("temp1",rec.getX() ,rec.getY() ,rec.getX() +rec.getW() ,rec.getY() );
+        Line temp2=new Line("temp2",rec.getX() ,rec.getY() ,rec.getX() ,rec.getY() -rec.getH() );
+        Line temp3=new Line("temp3",rec.getX() ,rec.getY() -rec.getH() ,rec.getX() +rec.getW() ,rec.getY() -rec.getH() );
+        Line temp4=new Line("temp4",rec.getX() +rec.getW() ,rec.getY() ,rec.getX() +rec.getW() ,rec.getY() -rec.getH() );
+        return intersectLineLine(line,temp1 )||intersectLineLine(line,temp2) ||intersectLineLine(line,temp3)||intersectLineLine(line,temp4);
+
+    }
+    public boolean intersectRectangleRectangle(Rectangle rec1,Rectangle rec2){
+        Line temp1=new Line("temp1",rec1.getX() ,rec1.getY() ,rec1.getX() +rec1.getW() ,rec1.getY() );
+        Line temp2=new Line("temp2",rec1.getX() ,rec1.getY() ,rec1.getX() ,rec1.getY() -rec1.getH() );
+        Line temp3=new Line("temp3",rec1.getX() ,rec1.getY() -rec1.getH() ,rec1.getX() +rec1.getW() ,rec1.getY() -rec1.getH() );
+        Line temp4=new Line("temp4",rec1.getX() +rec1.getW() ,rec1.getY() ,rec1.getX() +rec1.getW() ,rec1.getY() -rec1.getH() );
+        return intersectLineRectangle(temp1,rec2)|| intersectLineRectangle(temp2,rec2)||intersectLineRectangle(temp3,rec2)||intersectLineRectangle(temp4,rec2);
+    }
+    public boolean intersectCircleRectangle(Circle cir,Rectangle rec){
+        Line temp1=new Line("temp1",rec.getX() ,rec.getY() ,rec.getX() +rec.getW() ,rec.getY() );
+        Line temp2=new Line("temp2",rec.getX() ,rec.getY() ,rec.getX() ,rec.getY() -rec.getH() );
+        Line temp3=new Line("temp3",rec.getX() ,rec.getY() -rec.getH() ,rec.getX() +rec.getW() ,rec.getY() -rec.getH() );
+        Line temp4=new Line("temp4",rec.getX() +rec.getW() ,rec.getY() ,rec.getX() +rec.getW() ,rec.getY() -rec.getH() );
+        return intersectLineCircle(temp1,cir )|| intersectLineCircle(temp2,cir )||intersectLineCircle(temp3,cir )||intersectLineCircle(temp4,cir );
+
+    }
+     public boolean intersectLineSquare(Line lin,Square squ){
+         Rectangle temp=new Rectangle("temp",squ.getX() ,squ.getY() ,squ.getW() ,squ.getL() );
+        return intersectLineRectangle(lin,temp);
+
+     }
+     public boolean intersectSquareSquare(Square squ1,Square squ2){
+         Rectangle temp1=new Rectangle("temp1",squ1.getX() ,squ1.getY() ,squ1.getW() ,squ1.getL() );
+         Rectangle temp2=new Rectangle("temp2",squ2.getX() ,squ2.getY() ,squ2.getW() ,squ2.getL() );
+         return intersectRectangleRectangle(temp1,temp2);
+
+     }
+     public boolean intersectCircleSquare(Circle cir,Square squ){
+         Rectangle temp=new Rectangle("temp",squ.getX() ,squ.getY() ,squ.getW() ,squ.getL() );
+         return intersectCircleRectangle(cir,temp);
+
+     }
+     public boolean intersectSquareRectangle(Square squ,Rectangle rec){
+         Rectangle temp=new Rectangle("temp",squ.getX() ,squ.getY() ,squ.getW() ,squ.getL() );
+         return intersectRectangleRectangle(temp,rec);
+     }
 
     //This method receive the name of a shape
     //print out the information of the shape
