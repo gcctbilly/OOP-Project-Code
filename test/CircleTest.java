@@ -32,7 +32,7 @@ public class CircleTest {
     public void moveTest(){
         a.move(2,4);
         assertEquals(2,a.getX());
-        assertEquals(2,a.getY());
+        assertEquals(4,a.getY());
         assertEquals(1,a.getR());
     }
 
