@@ -58,7 +58,7 @@ public class GroupTest {
     }
     @Test
     public void move(){
-        a.move(2,2);
+        b.move(2,2);
         assertEquals(2,((Circle)a.getAllShapes().get("test3")).getX());
         assertEquals(2,((Circle)a.getAllShapes().get("test3")).getY());
         assertEquals(2,((Circle)b.getAllShapes().get("test3")).getX());
