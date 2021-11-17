@@ -25,7 +25,7 @@ public class LineTest {
 
     @Test
     public void isContainTest(){
-        assertTrue(a.isContainPoint(0,0.5));
+        assertFalse(a.isContainPoint(0,0.5));
         assertTrue(a.isContainPoint(0,0));
         assertFalse(a.isContainPoint(2,0));
     }
