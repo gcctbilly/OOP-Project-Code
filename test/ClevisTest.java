@@ -8,7 +8,7 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class ClevisTest {
+public class ClevisTest{
     Rectangle rec1;
     Rectangle rec2;
     Rectangle rec3;
@@ -18,6 +18,7 @@ public class ClevisTest {
     Group gro2;
     Line lin1;
     HashMap<String,Shape> storage;
+
     Clevis application = new Clevis();
     @BeforeEach
     public void before(){
@@ -48,6 +49,7 @@ public class ClevisTest {
         storage.put("test7",gro2);
         storage.put("test8",rec3);
         application.storage = storage;
+
     }
     @Test
     public void FileTest(){
@@ -96,7 +98,6 @@ public class ClevisTest {
         assertEquals(0,number3);
         assertEquals(0,number4);
         assertEquals(1,number5);
-
         assertEquals(1,a.getX1());
         assertEquals(2,a.getY1());
         assertEquals(3,a.getX2());
@@ -144,20 +145,26 @@ public class ClevisTest {
     @Test
     public void testCreateGroup(){
         int number1 = application.process("gro hh 1 2 3");
+        int number5 = application.process("group hh3 test1 test2");
         int number2 = application.process("group hh aa 2b 3");
         int number3 = application.process("group hh test3 test5");
         int number4 = application.process("group hh2 hh test1");
+
         Group a =(Group) storage.get("hh");
         Group b = (Group) storage.get("hh2");
+        Group c=(Group) storage.get("hh3");
+
         assertEquals(0,number1);
         assertEquals(0,number2);
         assertEquals(0,number3);
-        assertEquals(1,number4);
+        assertEquals(0,number4);
+        assertEquals(1,number5);
 
-        assertTrue(a.getAllShapes().containsKey("test3"));
-        assertTrue(b.getAllShapes().containsKey("test3"));
-        assertTrue(b.getAllShapes().containsKey("test5"));
-        assertTrue(b.getShapes().containsKey("hh"));
+        assertTrue(c.getAllShapes().containsKey("test1"));
+        assertTrue(c.getAllShapes().containsKey("test2"));
+
+
+
     }
     @Test
     public void unGroupTest(){
@@ -171,7 +178,7 @@ public class ClevisTest {
         assertEquals(1,number4);
 
         assertTrue(storage.containsKey("test5"));
-        assertFalse(storage.containsKey("test6"));
+        assertTrue(storage.containsKey("test6"));
         application.process("ungroup test6");
         assertTrue(storage.containsKey("test3"));
         assertTrue(storage.containsKey("test4"));

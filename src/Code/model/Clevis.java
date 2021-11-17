@@ -11,7 +11,9 @@ import Code.model.shape.*;
 
 
 public class Clevis {
+
     DecimalFormat  df=new DecimalFormat("#.00");
+
     public HashMap<String, Shape> storage;
     private String filePathHtml ="";
     private String filePathTxt = "";
@@ -104,8 +106,8 @@ public class Clevis {
             for(int i = 0; i < commands.length-2; i++) {
                 addName[i] = commands[i+2];
             }
-            createGroup(name,addName);
-            return 1;
+
+            return createGroup(name,addName);
         }
         else if(commands[0].equals("ungroup")) {
             if (commands.length != 2) {
@@ -113,8 +115,8 @@ public class Clevis {
                 return 0;
             }
             String name = commands[1];
-            unGroup(name);
-            return 1;
+
+            return unGroup(name);
         }
         else if (commands[0].equals("delete")){
             if (commands.length != 2) {
@@ -325,7 +327,7 @@ public class Clevis {
             return 0;
         }
         Line newLine = new Line(name,x1,y1,x2,y2);
-        storage.put(name,newLine);
+        storage .put(name,newLine );
         System.out.println("Line created successfully");
         return 1;
     }
@@ -337,12 +339,8 @@ public class Clevis {
     public int createGroup(String name, String[] addName) {
         HashMap<String,Shape> add = new HashMap<>();
         HashMap<String,Shape> addAll = new HashMap<>();
-        if(findShape(name) != null) {
-            System.out.println("This name has already existed !");
-            return 0;
-        }
         for(int i = 0; i < addName.length; i++) {
-            if (storage.containsKey(addName[i])) {
+            if (!storage.containsKey(addName[i])) {
                 System.out.println("The "+ addName[i] + " does not exist. This time will not create the group" );
                 return 0;
             }
@@ -360,6 +358,7 @@ public class Clevis {
         }
         Group newGroup = new Group(name,add,addAll);
         storage.put(name,newGroup);
+        System.out .println("Group created successfully") ;
         return 1;
 
     }
@@ -370,7 +369,7 @@ public class Clevis {
     // can not ungroup if the name does not exist or it is not a group
     //return 0 for fail and 1 for success
 
-   public int unGroup(String name) {
+    public int unGroup(String name) {
         if(!storage.containsKey(name)){
             System.out.println("The group does not exist");
             return 0;
@@ -379,11 +378,15 @@ public class Clevis {
         if(A.getClass().getSimpleName().equals("Group") ){
             Group B=(Group)A;
             for(String a:B.getShapes() .keySet() ){
-                storage.put(a,B.getShapes().get(a) ); 
+                storage.put(a,B.getShapes().get(a) );
             }
+            storage.remove(name);
+            return 1;
+        }else{
+            System.out .println("it is not a group");
+            return 0;
         }
-        storage.remove(name);
-        return 1;
+
 
     }
 
@@ -442,6 +445,7 @@ public class Clevis {
             System.out.println("There is no shape that contained the (" + x + "," + y + ")");
             return 0;
         }
+        System.out.println(currentShape.getName());
         currentShape.move(dx,dy);
         System.out.println("target has moved");
         return 1;
@@ -451,6 +455,7 @@ public class Clevis {
     //This method receive two names of shapes
     //print out whether the two shapes is intersected
     //can not print if one of the name can not find the shape
+    //return 0 for fail and 1 for success
     public boolean  intersect(String name1, String name2) {
         if(!storage.containsKey(name1) || !storage.containsKey(name2)) {
             System.out.println("There is no such shapes");
@@ -575,8 +580,8 @@ public class Clevis {
         }
         return false;
     }
-    
-    
+
+
     public boolean intersectLineLine(Line line1,Line line2){
         if(Math.max(line1.getX1() ,line1.getX2() )<Math .min(line2.getX1(),line2.getX2()) ||
                 Math .max(line1.getY1() ,line1.getY2() )<Math .min(line2.getY1() ,line2.getY2() ) ||
@@ -655,26 +660,26 @@ public class Clevis {
         return intersectLineCircle(temp1,cir )|| intersectLineCircle(temp2,cir )||intersectLineCircle(temp3,cir )||intersectLineCircle(temp4,cir );
 
     }
-     public boolean intersectLineSquare(Line lin,Square squ){
-         Rectangle temp=new Rectangle("temp",squ.getX() ,squ.getY() ,squ.getW() ,squ.getL() );
+    public boolean intersectLineSquare(Line lin,Square squ){
+        Rectangle temp=new Rectangle("temp",squ.getX() ,squ.getY() ,squ.getW() ,squ.getL() );
         return intersectLineRectangle(lin,temp);
 
-     }
-     public boolean intersectSquareSquare(Square squ1,Square squ2){
-         Rectangle temp1=new Rectangle("temp1",squ1.getX() ,squ1.getY() ,squ1.getW() ,squ1.getL() );
-         Rectangle temp2=new Rectangle("temp2",squ2.getX() ,squ2.getY() ,squ2.getW() ,squ2.getL() );
-         return intersectRectangleRectangle(temp1,temp2);
+    }
+    public boolean intersectSquareSquare(Square squ1,Square squ2){
+        Rectangle temp1=new Rectangle("temp1",squ1.getX() ,squ1.getY() ,squ1.getW() ,squ1.getL() );
+        Rectangle temp2=new Rectangle("temp2",squ2.getX() ,squ2.getY() ,squ2.getW() ,squ2.getL() );
+        return intersectRectangleRectangle(temp1,temp2);
 
-     }
-     public boolean intersectCircleSquare(Circle cir,Square squ){
-         Rectangle temp=new Rectangle("temp",squ.getX() ,squ.getY() ,squ.getW() ,squ.getL() );
-         return intersectCircleRectangle(cir,temp);
+    }
+    public boolean intersectCircleSquare(Circle cir,Square squ){
+        Rectangle temp=new Rectangle("temp",squ.getX() ,squ.getY() ,squ.getW() ,squ.getL() );
+        return intersectCircleRectangle(cir,temp);
 
-     }
-     public boolean intersectSquareRectangle(Square squ,Rectangle rec){
-         Rectangle temp=new Rectangle("temp",squ.getX() ,squ.getY() ,squ.getW() ,squ.getL() );
-         return intersectRectangleRectangle(temp,rec);
-     }
+    }
+    public boolean intersectSquareRectangle(Square squ,Rectangle rec){
+        Rectangle temp=new Rectangle("temp",squ.getX() ,squ.getY() ,squ.getW() ,squ.getL() );
+        return intersectRectangleRectangle(temp,rec);
+    }
 
     //This method receive the name of a shape
     //print out the information of the shape
@@ -693,7 +698,7 @@ public class Clevis {
             listLine(currentShape);
         }
         else if(currentShape.getClass().getSimpleName().equals("Circle")) {
-           listCircle(currentShape);
+            listCircle(currentShape);
         }
         else if(currentShape.getClass().getSimpleName().equals("Square")) {
             listSquare(currentShape);
@@ -814,6 +819,7 @@ public class Clevis {
         if(shapes.isEmpty()) return null;
         Shape[] shapesList  = shapes.toArray(new Shape[0]);
         mergeSort(shapesList,0,shapesList.length-1);
+
         return shapesList[0];
 
     }
