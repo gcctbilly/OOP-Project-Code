@@ -16,7 +16,34 @@ public class Group extends Shape{
 
     }
     public Rectangle boundingBox(){
-        return new Rectangle();
+        double xl,xr,yu,yd;
+        double Xl,Xr,Yu,Yd;
+        Object key=allShapes .keySet() .toArray() [0];
+        xl=allShapes.get(key).boundingBox().getX() ;
+        yu=allShapes.get(key).boundingBox().getY() ;
+        xr=allShapes.get(key).boundingBox().getX() +allShapes.get(key).boundingBox().getW() ;
+        yd=allShapes.get(key).boundingBox().getY() -allShapes.get(key).boundingBox().getH() ;
+        for(String a:allShapes .keySet()){
+            Xl=allShapes.get(a).boundingBox(). getX() ;
+            Yu=allShapes.get(a).boundingBox().getY() ;
+            Xr=allShapes.get(a).boundingBox().getX() +allShapes.get(a).boundingBox().getW() ;
+            Yd=allShapes.get(a).boundingBox().getY() -allShapes.get(a).boundingBox().getH() ;
+            if(Xl<xl){
+                xl=Xl;
+            }
+            if(Yu>yu){
+                yu=Yu;
+            }
+            if(Xr>xr){
+                xr=Xr;
+            }
+            if(Yd<yd){
+                yd=Yd;
+            }
+
+
+        }
+        return new Rectangle("boundingbox",xl,yu,xr-xl,yu-yd);
     }
 
     //judge whether this object contains the point(x,y)
