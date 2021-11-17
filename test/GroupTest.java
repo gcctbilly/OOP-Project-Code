@@ -41,7 +41,7 @@ public class GroupTest {
 
         assertEquals(-1,boundingBoxb.getX());
         assertEquals(1,boundingBoxb.getY());
-        assertEquals(3,boundingBoxb.getW());
+        assertEquals(4,boundingBoxb.getW());
         assertEquals(2,boundingBoxb.getH());
     }
 
