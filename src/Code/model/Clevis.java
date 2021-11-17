@@ -5,14 +5,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.io.*;
+import java.text.DecimalFormat;
 
 import Code.model.shape.*;
 
+
 public class Clevis {
-    private HashMap<String, Shape> storage;
+    DecimalFormat  df=new DecimalFormat("#.00");
+    public HashMap<String, Shape> storage;
     private String filePathHtml ="";
     private String filePathTxt = "";
     private int operationIndex = 0;
+
 
     public Clevis(){
         storage = new HashMap<>();
@@ -151,10 +155,10 @@ public class Clevis {
                 System.out.println("Please enter the right number");
                 return 0;
             }
-            double x = Double.parseDouble(commands[2]);
-            double y = Double.parseDouble(commands[3]);
-            double dx = Double.parseDouble(commands[4]);
-            double dy = Double.parseDouble(commands[5]);
+            double x = Double.parseDouble(commands[1]);
+            double y = Double.parseDouble(commands[2]);
+            double dx = Double.parseDouble(commands[3]);
+            double dy = Double.parseDouble(commands[4]);
             return pickMove(x,y,dx,dy);
         }
         else if(commands[0].equals("intersect")) {
@@ -191,7 +195,7 @@ public class Clevis {
             }
             return 2;
         }
-        System.out.println("There is no such command" + command);
+        System.out.println("There is no such command " + command);
         return 0;
 
 
@@ -257,7 +261,6 @@ public class Clevis {
             String processedCommand = "<tr><td>"+operationIndex +"</td><td>" + command + "</td></tr>";
             randomFile.write((processedCommand+remained).getBytes(StandardCharsets.UTF_8));
 
-            System.out.println(fileLength);
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -411,7 +414,7 @@ public class Clevis {
         Shape currentShape = storage.get(name);
         Rectangle boundingBox = currentShape.boundingBox();
         System.out.println("The bounding box is:");
-        System.out.println("name: " + boundingBox.getName() + " x: " + boundingBox.getX() + " y: " + boundingBox.getY() + " w: " + boundingBox.getW() + " h: " + boundingBox.getH());
+        System.out.println("name: " + boundingBox.getName() + " x:" + boundingBox.getX() + " y:" + boundingBox.getY() + " w:" + boundingBox.getW() + " h:" + boundingBox.getH());
         return 1;
     }
 
@@ -740,31 +743,31 @@ public class Clevis {
 
     //List the information of rectangle
     public void listRectangle(Shape currentShape) {
-        System.out.println("The information of the rectangle is: ");
-        System.out.println("name: " + ((Rectangle) currentShape).getName() + "The top-left : (" + ((Rectangle)currentShape).getX() + "," + ((Rectangle)currentShape).getY()+ ")" + " w: " + ((Rectangle) currentShape).getW() + " h: " + ((Rectangle) currentShape).getH());
+        System.out.print("Rectangle: ");
+        System.out.println("name:" + ((Rectangle)currentShape).getName() + " The top-left point:(" + df.format(((Rectangle)currentShape).getX()) + "," + df.format(((Rectangle)currentShape).getY())+ ")" + " w:" + df.format(((Rectangle) currentShape).getW()) + " h:" + df.format(((Rectangle) currentShape).getH()));
     }
 
     //List the information of line
     public void listLine(Shape currentShape) {
-        System.out.println("The information of the Line is: ");
-        System.out.println("name: " + ((Line)currentShape).getName() + " The two nodes are: (" +  ((Line)currentShape).getX1() + "," + ((Line)currentShape).getY1()+ ") , (" + ((Line)currentShape).getX2() + "," + ((Line)currentShape).getY2() + ")");
+        System.out.print("Line: ");
+        System.out.println("name:" + ((Line)currentShape).getName() + " The two nodes are:(" +  df.format(((Line)currentShape).getX1()) + "," + df.format(((Line)currentShape).getY1())+ ") , (" + df.format(((Line)currentShape).getX2()) + "," + df.format(((Line)currentShape).getY2()) + ")");
     }
 
     //List the information of Circle
     public void listCircle(Shape currentShape) {
-        System.out.println("The information of the circle is: ");
-        System.out.println("name: " + ((Circle)currentShape).getName() + "Center of circle is: (" + ((Circle)currentShape).getX() + "," + ((Circle)currentShape).getY()+ ")" + "r: " + ((Circle)currentShape).getR());
+        System.out.print("Circle: ");
+        System.out.println("name:" + ((Circle)currentShape).getName() + " Center of circle:(" + df.format(((Circle)currentShape).getX()) + "," + df.format(((Circle)currentShape).getY())+ ")" + " r:" + df.format(((Circle)currentShape).getR()));
     }
 
     //List the information of Square
     public void listSquare(Shape currentShape) {
-        System.out.println("The information of the Square is: ");
-        System.out.println("name: " + ((Square) currentShape).getName() + "The top-left : (" + ((Square)currentShape).getX() + "," + ((Square)currentShape).getY()+ ")" + "l:" + ((Square)currentShape).getL() );
+        System.out.print("Square: ");
+        System.out.println("name:" + ((Square) currentShape).getName() + " The top-left point:(" + df.format(((Square)currentShape).getX()) + "," + df.format(((Square)currentShape).getY())+ ")" + " l:" + df.format(((Square)currentShape).getL()) );
     }
 
     //List the information of Group
     public void listGroup(Shape currentShape) {
-        System.out.println("The information of the group " + ((Group)currentShape).getName()+ " is: ");
+        System.out.println("The content in the group " + currentShape.getName()+ " is: ");
         HashMap<String,Shape> shapes = ((Group)currentShape).getShapes();
         Shape oneShape = null;
         Iterator it = shapes.values().iterator();
@@ -772,23 +775,23 @@ public class Clevis {
         while (it.hasNext()) {
             oneShape = (Shape) it.next();
             if(oneShape.getClass().getSimpleName().equals("Rectangle")) {
-                System.out.print("    "+i + ": ");
+                System.out.print("    ("+i + "): ");
                 listRectangle(oneShape);
             }
             else if(currentShape.getClass().getSimpleName().equals("Line")) {
-                System.out.print("    "+i + ": ");
+                System.out.print("    ("+i + "): ");
                 listLine(oneShape);
             }
             else if(currentShape.getClass().getSimpleName().equals("Circle")) {
-                System.out.print("    "+i + ": ");
+                System.out.print("    ("+i + "): ");
                 listCircle(oneShape);
             }
             else if(currentShape.getClass().getSimpleName().equals("Square")) {
-                System.out.print("    "+i + ": ");
+                System.out.print("    ("+i + "): ");
                 listSquare(oneShape);
             }
             else if (currentShape.getClass().getSimpleName().equals("Group")) {
-                System.out.print("    "+i + ": " + "Group");
+                System.out.print("    ("+i + "): " + "Group: ");
                 System.out.println("This is a group shape and name is:" + ((Group)oneShape).getName());
             }
             i++;
@@ -840,7 +843,9 @@ public class Clevis {
 
     public boolean isAllNumber(String str) {
         char[] a = str.toCharArray();
+
         for(int i = 0 ; i< a.length;i++) {
+            if(i == 0 && a[i] == '-') continue;
             if(!Character.isDigit(a[i]) && a[i] != '.') {
                 return false;
             }

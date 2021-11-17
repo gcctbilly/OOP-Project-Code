@@ -18,4 +18,6 @@ public abstract class Shape {
 
     public abstract int getThisZOrder();
 
+    public abstract String getName();
+
 }

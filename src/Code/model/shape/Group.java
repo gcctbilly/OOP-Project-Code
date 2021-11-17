@@ -13,6 +13,7 @@ public class Group extends Shape{
         this.name = name;
         this.shapes = shapes;
         this.allShapes = allShapes;
+        thisZOrder = super.getzOrder();
 
     }
     public Rectangle boundingBox(){

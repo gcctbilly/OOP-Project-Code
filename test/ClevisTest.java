@@ -1,6 +1,5 @@
 import Code.model.Clevis;
 import Code.model.shape.*;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -46,12 +45,9 @@ public class ClevisTest {
 
         storage.put("test1",rec1);
         storage.put("test2",squ1);
-        storage.put("test3",cir1);
-        storage.put("test4",lin1);
-        storage.put("test5",rec2);
-        storage.put("test6",gro1);
         storage.put("test7",gro2);
         storage.put("test8",rec3);
+        application.storage = storage;
     }
     @Test
     public void FileTest(){
@@ -72,7 +68,7 @@ public class ClevisTest {
         int number1 = application.process("rectan hh 1 2 3 4");
         int number2 = application.process("rectangle hh 1a 2b 3 4");
         int number3 = application.process("rectangle hh 1 2 3 4 5");
-        int number4 = application.process("rectangle test1 1 2 3 4");
+        int number4 = application.process("rectangle test3 1 2 3 4");
         int number5 = application.process("rectangle hh 1 2 3 4");
         Rectangle a =(Rectangle)storage.get("hh");
         assertEquals(0,number1);
@@ -92,7 +88,7 @@ public class ClevisTest {
         int number1 = application.process("li hh 1 2 3 4");
         int number2 = application.process("line hh 1a 2b 3 4");
         int number3 = application.process("line hh 1 2 3 4 5");
-        int number4 = application.process("line test1 1 2 3 4");
+        int number4 = application.process("line test3 1 2 3 4");
         int number5 = application.process("line hh 1 2 3 4");
         Line a =(Line) storage.get("hh");
         assertEquals(0,number1);
@@ -112,7 +108,7 @@ public class ClevisTest {
         int number1 = application.process("cir hh 1 2 3");
         int number2 = application.process("circle hh 1a 2b 3");
         int number3 = application.process("circle hh 1 2 3 4");
-        int number4 = application.process("circle test1 1 2 3");
+        int number4 = application.process("circle test3 1 2 3");
         int number5 = application.process("circle hh 1 2 3");
         Circle a =(Circle) storage.get("hh");
         assertEquals(0,number1);
@@ -131,7 +127,7 @@ public class ClevisTest {
         int number1 = application.process("squ hh 1 2 3");
         int number2 = application.process("square hh 1a 2b 3");
         int number3 = application.process("square hh 1 2 3 4");
-        int number4 = application.process("square test1 1 2 3");
+        int number4 = application.process("square test3 1 2 3");
         int number5 = application.process("square hh 1 2 3");
         Square a =(Square) storage.get("hh");
         assertEquals(0,number1);
@@ -285,6 +281,9 @@ public class ClevisTest {
         int number1 = application.process("q");
         int number2 = application.process("quit a");
         int number3 = application.process("quit");
+        assertEquals(0,number1);
+        assertEquals(0,number2);
+        assertEquals(2,number3);
     }
 
 }
