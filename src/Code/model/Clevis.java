@@ -97,8 +97,8 @@ public class Clevis {
         else if(commands[0].equals("group")) {
             String name = commands[1];
             String addName[] = new String[commands.length-2];
-            for(int i = 2; i < commands.length-2; i++) {
-                addName[i-2] = commands[i];
+            for(int i = 0; i < commands.length-2; i++) {
+                addName[i] = commands[i+2];
             }
 
             return createGroup(name,addName);
