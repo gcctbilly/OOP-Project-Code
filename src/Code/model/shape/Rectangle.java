@@ -20,7 +20,7 @@ public class Rectangle extends Shape{
     public Rectangle boundingBox(){
         Double bx=Double.parseDouble(String.format("%.2f", x));
         Double by=Double.parseDouble(String.format("%.2f", y));
-        return new Rectangle("Boxof"+name,x,y,w,h);
+        return new Rectangle("Boxof"+name,bx,by,w,h);
     }
 
     //judge whether this object contains the point(x,y)
