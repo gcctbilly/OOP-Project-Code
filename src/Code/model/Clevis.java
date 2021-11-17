@@ -322,6 +322,7 @@ public class Clevis {
             return 0;
         }
         Line newLine = new Line(name,x1,y1,x2,y2);
+        storage.put(name,newLine);
         System.out.println("Line created successfully");
         return 1;
     }
@@ -333,6 +334,10 @@ public class Clevis {
     public int createGroup(String name, String[] addName) {
         HashMap<String,Shape> add = new HashMap<>();
         HashMap<String,Shape> addAll = new HashMap<>();
+        if(findShape(name) != null) {
+            System.out.println("This name has already existed !");
+            return 0;
+        }
         for(int i = 0; i < addName.length; i++) {
             if (storage.containsKey(addName[i])) {
                 System.out.println("The "+ addName[i] + " does not exist. This time will not create the group" );
