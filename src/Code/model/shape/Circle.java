@@ -2,8 +2,8 @@ package Code.model.shape;
 
 public class Circle extends Shape{
     private String name;
-    double x,y,r;
-    int thisZOrder;
+    private double x,y,r;
+    private int thisZOrder;
 
     public Circle(String name, double x, double y, double r) {
         this.name = name;
@@ -34,11 +34,6 @@ public class Circle extends Shape{
         this.x=x+dx;
         this.y=y+dy;
 
-    }
-
-    //return a string that contains the information of the Shape
-    public String toString() {
-        return "";
     }
 
     public String getName() {

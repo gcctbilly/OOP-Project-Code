@@ -10,7 +10,6 @@ public class Square extends Rectangle{
         this.x = x;
         this.y = y;
         this.l = l;
-        //可能会有问题
         thisZOrder = super.getzOrder();
     }
     public Rectangle boundingBox(){
@@ -42,10 +41,6 @@ public class Square extends Rectangle{
         this.y=this.y+dy;
     }
 
-    //return a string that contains the information of the Shape
-    public String toString() {
-        return "";
-    }
 
     @Override
     public String getName() {

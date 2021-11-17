@@ -448,7 +448,6 @@ public class Clevis {
     //This method receive two names of shapes
     //print out whether the two shapes is intersected
     //can not print if one of the name can not find the shape
-    //return 0 for fail and 1 for success
     public boolean  intersect(String name1, String name2) {
         if(!storage.containsKey(name1) || !storage.containsKey(name2)) {
             System.out.println("There is no such shapes");
@@ -867,7 +866,7 @@ public class Clevis {
         int leftIndex = 0, rightIndex = 0;
         index = low;
         while(leftIndex < mid-low+1 && rightIndex < high-mid) {
-            a[index++] = left[leftIndex].getzOrder() > right[rightIndex].getzOrder()? left[leftIndex++] : right[rightIndex++];
+            a[index++] = left[leftIndex].getThisZOrder() > right[rightIndex].getThisZOrder()? left[leftIndex++] : right[rightIndex++];
         }
         while(leftIndex < mid - low+1) a[index++] = left[leftIndex++];
         while(rightIndex < high-mid) a[index++] = right[rightIndex++];

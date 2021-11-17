@@ -44,10 +44,6 @@ public class Group extends Shape{
 
     }
 
-    //return a string that contains the information of the Shape
-    public String toString() {
-        return "";
-    }
 
     public String getName() {
         return name;

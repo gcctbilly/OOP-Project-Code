@@ -16,6 +16,6 @@ public abstract class Shape {
     //move dx and dy for this objective
     public abstract void move(double dx, double dy);
 
-    //return a string that contains the information of the Shape
-    public abstract String toString();
+    public abstract int getThisZOrder();
+
 }

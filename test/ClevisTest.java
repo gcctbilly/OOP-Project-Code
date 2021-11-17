@@ -22,6 +22,7 @@ public class ClevisTest {
     Clevis application = new Clevis();
     @BeforeEach
     public void before(){
+        storage = new HashMap<>();
         rec1 = new Rectangle("test1",-1,1,2,2);
         squ1 = new Square("test2",-1,1,2);
         cir1 = new Circle("test3",0,0,1);

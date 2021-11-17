@@ -46,10 +46,6 @@ public class Rectangle extends Shape{
         this.y=this.y+dy;
     }
 
-    //return a string that contains the information of the Shape
-    public String toString() {
-        return "";
-    }
 
 
     public String getName() {

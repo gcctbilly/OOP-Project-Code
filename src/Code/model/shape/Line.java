@@ -65,10 +65,6 @@ public class Line extends Shape {
         this.y2=this.y2+dy;
     }
 
-    //return a string that contains the information of the Shape
-    public String toString() {
-        return "";
-    }
 
     public String getName() {
         return name;
