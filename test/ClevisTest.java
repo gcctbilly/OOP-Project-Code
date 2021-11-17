@@ -48,7 +48,7 @@ public class ClevisTest{
         storage.put("test2",squ1);
         storage.put("test7",gro2);
         storage.put("test8",rec3);
-        application.storage = storage;
+        application.setStorage(storage);
 
     }
     @Test

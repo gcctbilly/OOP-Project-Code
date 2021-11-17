@@ -3,12 +3,20 @@ package Code.model.shape;
 import java.util.HashMap;
 import java.util.Iterator;
 
+/**
+ *
+ */
 public class Group extends Shape{
     private String name;
     private HashMap<String,Shape> shapes;
     private HashMap<String,Shape> allShapes; // store all the simple shapes of the group
     private int thisZOrder;
 
+    /**
+     * @param name name
+     * @param shapes shapes
+     * @param allShapes allShapes
+     */
     public Group(String name, HashMap<String,Shape> shapes, HashMap<String,Shape> allShapes) {
         this.name = name;
         this.shapes = shapes;
@@ -16,6 +24,7 @@ public class Group extends Shape{
         thisZOrder = super.getzOrder();
 
     }
+    @Override
     public Rectangle boundingBox(){
         double xl,xr,yu,yd;
         double Xl,Xr,Yu,Yd;
@@ -63,6 +72,7 @@ public class Group extends Shape{
     }
 
     //judge whether this object contains the point(x,y)
+    @Override
     public boolean isContainPoint(double x, double y){
         Shape currentShape = null;
         Iterator it = allShapes.values().iterator();
@@ -76,6 +86,7 @@ public class Group extends Shape{
     }
 
     //move dx and dy for this objective
+    @Override
     public void move(double dx, double dy){
         Shape currentShape = null;
         Iterator it = allShapes.values().iterator();
@@ -88,18 +99,26 @@ public class Group extends Shape{
     }
 
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public int getThisZOrder() {
         return thisZOrder;
     }
 
+    /**
+     * @return shapes
+     */
     public HashMap<String, Shape> getShapes() {
         return shapes;
     }
 
+    /**
+     * @return  allShapes
+     */
     public HashMap<String, Shape> getAllShapes() {
         return allShapes;
     }

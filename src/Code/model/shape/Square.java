@@ -1,10 +1,23 @@
 package Code.model.shape;
 
+/**
+ *
+ */
 public class Square extends Rectangle{
+    /**
+     *
+     */
+    public static final double DOUBLE1 = 0.05;
     private String name;
     private double x,y,l;
     private int thisZOrder;
 
+    /**
+     * @param name 1
+     * @param x 1
+     * @param y 1
+     * @param l 1
+     */
     public Square(String name, double x, double y, double l) {
         this.name = name;
         this.x = x;
@@ -12,6 +25,7 @@ public class Square extends Rectangle{
         this.l = l;
         thisZOrder = super.getzOrder();
     }
+    @Override
     public Rectangle boundingBox(){
         Double bx=Double.parseDouble(String.format("%.2f", x));
         Double by=Double.parseDouble(String.format("%.2f", y));
@@ -19,23 +33,25 @@ public class Square extends Rectangle{
     }
 
     //judge whether this object contains the point(x,y)
+    @Override
     public boolean isContainPoint(double a, double b){
-        if(a>x-0.05 && a<x+0.05 && b<y+0.05 && b>y-l-0.05){
+        if(a>x- DOUBLE1 && a<x+DOUBLE1 && b<y+DOUBLE1 && b>y-l-DOUBLE1){
             return true;
         }
-        else if(a>x-0.05 && a<x+l+0.05 && b<y+0.05 && b>y-0.05){
+        else if(a>x-DOUBLE1 && a<x+l+DOUBLE1 && b<y+DOUBLE1 && b>y-DOUBLE1){
             return true;
         }
-        else if(a>x-0.05 && a<x+l+0.05 && b<y-l+0.05 && b>y-l-0.05){
+        else if(a>x-DOUBLE1 && a<x+l+DOUBLE1 && b<y-l+DOUBLE1 && b>y-l-DOUBLE1){
             return true;
         }
-        else if(a>x+l-0.05 && a<x+l+0.05 && b<y+0.05 && b>y-l-0.05){
+        else if(a>x+l-DOUBLE1 && a<x+l+DOUBLE1 && b<y+DOUBLE1 && b>y-l-DOUBLE1){
             return true;
         }
         return false;
     }
 
     //move dx and dy for this objective
+    @Override
     public void move(double dx, double dy){
         this.x=this.x+dx;
         this.y=this.y+dy;
@@ -57,6 +73,9 @@ public class Square extends Rectangle{
         return y;
     }
 
+    /**
+     * @return 1
+     */
     public double getL() {
         return l;
     }

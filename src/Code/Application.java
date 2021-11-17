@@ -4,7 +4,13 @@ import Code.model.Clevis;
 
 import java.util.Scanner;
 
+/**
+ * description is in the report
+ */
 public class Application {
+    /**
+     * @param args 1
+     */
     public static void main(String[] args){
         Clevis clevis = new Clevis();
         Scanner input = new Scanner(System.in);
@@ -15,7 +21,6 @@ public class Application {
         // Initialize and utilize the system
         System.out.println("Welcome for using Clevis");
         //create tht file
-/*
         filePathHtml = args[1];
         filePathTxt = args[3];
         int fileNumber = clevis.createFile(args[1],args[3]);
@@ -23,7 +28,6 @@ public class Application {
             System.out.println("SoftWare quit, please run it again with the write name");
             return;
         }
-*/
 
         while(true) {
             System.out.print("Please enter the command: ");
