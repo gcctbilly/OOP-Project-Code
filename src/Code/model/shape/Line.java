@@ -13,8 +13,11 @@ public class Line extends Shape {
         this.y2 = y2;
         this.thisZOrder = super.getzOrder();
     }
-    public Rectangle boundingBox(){
-        return null;
+    public Rectangle boundingBox() {
+        if(x1==x2||y1==y2){
+            return null;
+        }
+        return new Rectangle("boundingbox", Math.min(x1,x2), Math.max(y1,y2), Math.max(x1,x2)- Math.min(x1,x2), Math.max(y1,y2)- Math.min(y1,y2));
     }
 
     //judge whether this object contains the point(x,y)
