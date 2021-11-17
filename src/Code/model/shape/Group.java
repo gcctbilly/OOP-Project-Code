@@ -18,27 +18,42 @@ public class Group extends Shape{
     public Rectangle boundingBox(){
         double xl,xr,yu,yd;
         double Xl,Xr,Yu,Yd;
-        Object key=allShapes .keySet() .toArray() [0];
-        xl=allShapes.get(key).boundingBox().getX() ;
-        yu=allShapes.get(key).boundingBox().getY() ;
-        xr=allShapes.get(key).boundingBox().getX() +allShapes.get(key).boundingBox().getW() ;
-        yd=allShapes.get(key).boundingBox().getY() -allShapes.get(key).boundingBox().getH() ;
+        xl=1;xr=1;yu=1;yd=1;
+        for(String a:allShapes .keySet()) {
+            if (allShapes.get(a).boundingBox() != null) {
+                xl = allShapes.get(a).boundingBox().getX();
+
+                yu = allShapes.get(a).boundingBox().getY();
+                xr = allShapes.get(a).boundingBox().getX() + allShapes.get(a).boundingBox().getW();
+                yd = allShapes.get(a).boundingBox().getY() - allShapes.get(a).boundingBox().getH();
+            }
+        }
         for(String a:allShapes .keySet()){
-            Xl=allShapes.get(a).boundingBox(). getX() ;
-            Yu=allShapes.get(a).boundingBox().getY() ;
-            Xr=allShapes.get(a).boundingBox().getX() +allShapes.get(a).boundingBox().getW() ;
-            Yd=allShapes.get(a).boundingBox().getY() -allShapes.get(a).boundingBox().getH() ;
-            if(Xl<xl){
-                xl=Xl;
+            if(allShapes.get(a).boundingBox()!=null) {
+                Xl = allShapes.get(a).boundingBox().getX();
+                Yu = allShapes.get(a).boundingBox().getY();
+                Xr = allShapes.get(a).boundingBox().getX() + allShapes.get(a).boundingBox().getW();
+                Yd = allShapes.get(a).boundingBox().getY() - allShapes.get(a).boundingBox().getH();
+
+            }else{
+                Line temp=(Line)allShapes.get(a);
+                Xl=Math.min(temp.getX1(),temp.getX2() );
+                Yu=Math.max(temp.getY1(),temp.getY2() );
+                Xr= Math.max(temp.getX1(),temp.getX2() );
+                Yd= Math.min(temp.getY1() ,temp.getY2() );
+
             }
-            if(Yu>yu){
-                yu=Yu;
+            if (Xl < xl) {
+                xl = Xl;
             }
-            if(Xr>xr){
-                xr=Xr;
+            if (Yu > yu) {
+                yu = Yu;
             }
-            if(Yd<yd){
-                yd=Yd;
+            if (Xr > xr) {
+                xr = Xr;
+            }
+            if (Yd < yd) {
+                yd = Yd;
             }
 
 
