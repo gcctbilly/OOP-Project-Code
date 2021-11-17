@@ -17,5 +17,7 @@ public abstract class Shape {
     public abstract void move(double dx, double dy);
 
     public abstract int getThisZOrder();
+   
+    public abstract String getName();
 
 }
