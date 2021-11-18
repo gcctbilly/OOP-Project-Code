@@ -1,11 +1,19 @@
 package Code.model.shape;
 
 /**
- *
+ *This class is a Rectangle class.
+ * This class is used to create a rectangle according to user commands.
+ * And some functions need to call methods in this class.
  */
 public class Rectangle extends Shape{
     /**
-     *
+     *Field
+     * name: The name of the created rectangle.
+     * x: The x-axis of the vertex of the top-left corner of the created rectangle.
+     * y: The y-axis of the vertex of the top-left corner of the created rectangle.
+     * w: The width of the created rectangle.
+     * h: The height of the created rectangle.
+     * thisZOrder: This field is used to keep track of the zOrder of each shape. It will increase one after shapes are been created.
      */
     public static final double DOUBLE = 0.05;
     private String name;
@@ -34,10 +42,14 @@ public class Rectangle extends Shape{
     }
 
     /**
-     *
+     * null
      */
     public Rectangle(){}
 
+    /**
+     *
+     * @return Rectangle boundingBox()
+     */
     // return the bounding box of this object
     @Override
     public Rectangle boundingBox(){
@@ -46,6 +58,12 @@ public class Rectangle extends Shape{
         return new Rectangle("Boxof"+name,bx,by,w,h);
     }
 
+    /**
+     *
+     * @param a
+     * @param b
+     * @return true/false
+     */
     //judge whether this object contains the point(x,y)
     @Override
     public boolean isContainPoint(double a, double b){
@@ -64,6 +82,11 @@ public class Rectangle extends Shape{
         return false;
     }
 
+    /**
+     *
+     * @param dx  x
+     * @param dy y
+     */
     //move dx and dy for this objective
     @Override
     public void move(double dx, double dy){
@@ -71,7 +94,10 @@ public class Rectangle extends Shape{
         this.y=this.y+dy;
     }
 
-
+    /**
+     *
+     * @return name
+     */
 
     @Override
     public String getName() {
@@ -107,6 +133,10 @@ public class Rectangle extends Shape{
         return h;
     }
 
+    /**
+     *
+     * @return thisZOrder
+     */
     @Override
     public int getThisZOrder() {
         return thisZOrder;

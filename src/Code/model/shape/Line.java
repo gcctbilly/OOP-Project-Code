@@ -1,10 +1,18 @@
 package Code.model.shape;
 
 /**
- * description is in the report
+ * This class is a line class.
+ * This class is used to create a line according to user commands.
+ * And some functions need to call methods in this class.
  */
 public class Line extends Shape {
     /**
+     * name: The name of the created line.
+     * x1: The x-axis of the left end point of the line segment.
+     * y1: The y-axis of the left end point of the line segment.
+     * x2: The x-axis of the right end point of the line segment.
+     * y2: The y-axis of the right end point of the line segment.
+     * thisZOrder: This field is used to keep track of the zOrder of each shape. It will increase one after shapes are been created
      *
      */
     public static final double DOUBLE = 0.05;
@@ -27,6 +35,10 @@ public class Line extends Shape {
         this.y2 = y2;
         this.thisZOrder = super.getzOrder();
     }
+
+    /**
+     * @return Rectangle boundingBox()
+     */
     @Override
     public Rectangle boundingBox() {
         if(x1==x2||y1==y2){
@@ -35,6 +47,11 @@ public class Line extends Shape {
         return new Rectangle("boundingbox", Math.min(x1,x2), Math.max(y1,y2), Math.max(x1,x2)- Math.min(x1,x2), Math.max(y1,y2)- Math.min(y1,y2));
     }
 
+    /**
+     * @param x  x
+     * @param y y
+     * @return true/false
+     */
     //judge whether this object contains the point(x,y)
     @Override
     public boolean isContainPoint(double x, double y){
@@ -77,6 +94,11 @@ public class Line extends Shape {
 
     }
 
+    /**
+     * @param dx  x
+     * @param dy y
+     */
+
     //move dx and dy for this objective
     @Override
     public void move(double dx, double dy){
@@ -86,7 +108,9 @@ public class Line extends Shape {
         this.y2=this.y2+dy;
     }
 
-
+    /**
+     * @return name
+     */
     @Override
     public String getName() {
         return name;
@@ -120,6 +144,10 @@ public class Line extends Shape {
         return y2;
     }
 
+    /**
+     *
+     * @return thisZOrder
+     */
     @Override
     public int getThisZOrder() {
         return thisZOrder;
