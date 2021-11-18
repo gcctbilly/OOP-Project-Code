@@ -11,21 +11,25 @@ import Code.model.shape.*;
 
 
 /**
- * description is in the report
+ * This class contain all the logic and function of the software.
+ * It will execute the user’s input and present the right result.
  */
 public class Clevis {
 
     /**
+     *Field
      *
+     * HashMap<String, Shape> storage: This variable is used to store all the shapes that use created. It is a HashMap, the key is the name of the shape and the value is the Class that inherit the Shape.
+     *
+     *
+     * String filePathHtml: This variable is used to store the file path of the log.html.
+     *
+     * String filePathTxt: This variable is used to store the file path of the log.txt.
+     *
+     * int operationIndex: This variable is used to record how many command that the use input.
      */
     public static final int INT = 16;
-    /**
-     *
-     */
     public static final double B = 0.5;
-    /**
-     *
-     */
     private DecimalFormat  df=new DecimalFormat("0.00");
 
     private HashMap<String, Shape> storage;
@@ -35,14 +39,15 @@ public class Clevis {
 
 
     /**
-     *
+     *  constructor
      */
     public Clevis(){
         storage = new HashMap<>();
     }
 
     /**
-     * @param command 1
+     *
+     * @param command The user uses this command to let CLevis perform the operation
      * @return 1
      */
     // This method receive a command string and judge what function to execute
@@ -229,8 +234,8 @@ public class Clevis {
     }
 
     /**
-     * @param nameHtml 1
-     * @param nameTxt 1
+     * @param nameHtml ssve in file
+     * @param nameTxt save in file
      * @return 1
      */
     //create the file 1 for success 0 for fail
@@ -255,7 +260,7 @@ public class Clevis {
     }
 
     /**
-     * @param command 1
+     * @param command write command in the html
      */
     //write command in the txt
     public void writeFileTxt(String command) {
@@ -287,7 +292,7 @@ public class Clevis {
     }
 
     /**
-     * @param command 1
+     * @param command write command in the html
      */
     //write command in the html
     public void writeFileHtml(String command) {
@@ -309,11 +314,11 @@ public class Clevis {
 
 
     /**
-     * @param name 1
-     * @param x 1
-     * @param y 1
-     * @param w 1
-     * @param h 1
+     * @param name name of shape
+     * @param x x-axis of top-left point
+     * @param y y-axis of top-left point
+     * @param w width of shape
+     * @param h height of shape
      * @return 1
      */
     // This method receive information of rectangle and add rectangle to storage
@@ -332,10 +337,10 @@ public class Clevis {
     }
 
     /**
-     * @param name 1
-     * @param x 1
-     * @param y 1
-     * @param r 1
+     * @param name name of shape
+     * @param x x-axis of center of circle
+     * @param y y-axis of center of circle
+     * @param r radius of circle
      * @return 1
      */
     // This method receive information of circle and add circle to storage
@@ -355,10 +360,10 @@ public class Clevis {
     }
 
     /**
-     * @param name 1
-     * @param x 1
-     * @param y 1
-     * @param l 1
+     * @param name name of shape
+     * @param x x-axis of top-left point
+     * @param y y-axis of top-left point
+     * @param l sides length of square
      * @return 1
      */
     // This method receive information of square and add square to storage
@@ -377,11 +382,11 @@ public class Clevis {
     }
 
     /**
-     * @param name 1
-     * @param x1 1
-     * @param y1 1
-     * @param x2 1
-     * @param y2 1
+     * @param name name of shape
+     * @param x1 x-axis
+     * @param y1 y-axis
+     * @param x2 x-axis
+     * @param y2 y-axis
      * @return 1
      */
     // This method receive information of Line and add Line to storage
@@ -400,8 +405,8 @@ public class Clevis {
     }
 
     /**
-     * @param name 1
-     * @param addName 1
+     * @param name name of group
+     * @param addName name of added shape
      * @return 1
      */
     // This method receive information of group and add group to storage
@@ -446,7 +451,7 @@ public class Clevis {
     //return 0 for fail and 1 for success
 
     /**
-     * @param name 1
+     * @param name name of unGroup shape
      * @return 1
      */
     public int unGroup(String name) {
@@ -471,7 +476,7 @@ public class Clevis {
     }
 
     /**
-     * @param name 1
+     * @param name name of deleted name
      * @return 1
      */
     //This method receive name of a shape
@@ -490,7 +495,7 @@ public class Clevis {
     }
 
     /**
-     * @param name  1
+     * @param name  name of shape of boundingBox
      * @return 1
      */
     //This method receive name of a shape
@@ -510,9 +515,9 @@ public class Clevis {
     }
 
     /**
-     * @param name 1
-     * @param dx 1
-     * @param dy 1
+     * @param name name of moved shape
+     * @param dx the distance of moving horizontally
+     * @param dy the distance of moving vertically
      * @return 1
      */
     //This method receive name of a shape and the distance need to move in the x and y
@@ -530,10 +535,10 @@ public class Clevis {
     }
 
     /**
-     * @param x 1
-     * @param y 1
-     * @param dx 1
-     * @param dy 1
+     * @param x x-axis of point
+     * @param y y-axis of point
+     * @param dx the distance of moving horizontally
+     * @param dy the distance of moving vertically
      * @return 1
      */
     //This method receive the point(x,y)
@@ -554,8 +559,8 @@ public class Clevis {
     }
 
     /**
-     * @param name1 1
-     * @param name2 1
+     * @param name1 name of shape1
+     * @param name2 name of shape2
      * @return 1
      */
     //This method receive two names of shapes
@@ -689,8 +694,8 @@ public class Clevis {
 
 
     /**
-     * @param line1  1
-     * @param line2 1
+     * @param line1  line
+     * @param line2 line
      * @return 1
      */
     public boolean intersectLineLine(Line line1,Line line2){
@@ -712,8 +717,8 @@ public class Clevis {
     }
 
     /**
-     * @param line  1
-     * @param cir 1
+     * @param line  line
+     * @param cir circle
      * @return 1
      */
     public boolean intersectLineCircle(Line line,Circle cir){
@@ -745,8 +750,8 @@ public class Clevis {
     }
 
     /**
-     * @param cir1  1
-     * @param cir2 1
+     * @param cir1  circle
+     * @param cir2 circle
      * @return 1
      */
     public boolean intersectCircleCircle(Circle cir1,Circle cir2){
@@ -762,8 +767,8 @@ public class Clevis {
     }
 
     /**
-     * @param line  1
-     * @param rec 1
+     * @param line  line
+     * @param rec rectangle
      * @return 1
      */
     public boolean intersectLineRectangle(Line line,Rectangle rec){
@@ -776,8 +781,8 @@ public class Clevis {
     }
 
     /**
-     * @param rec1 1
-     * @param rec2 1
+     * @param rec1 rectangle
+     * @param rec2 rectangle
      * @return 1
      */
     public boolean intersectRectangleRectangle(Rectangle rec1,Rectangle rec2){
@@ -789,8 +794,8 @@ public class Clevis {
     }
 
     /**
-     * @param cir  1
-     * @param rec 1
+     * @param cir circle
+     * @param rec rectangle
      * @return 1
      */
     public boolean intersectCircleRectangle(Circle cir,Rectangle rec){
@@ -803,8 +808,8 @@ public class Clevis {
     }
 
     /**
-     * @param lin  1
-     * @param squ 1
+     * @param lin line
+     * @param squ square
      * @return 1
      */
     public boolean intersectLineSquare(Line lin,Square squ){
@@ -814,8 +819,8 @@ public class Clevis {
     }
 
     /**
-     * @param squ1 1
-     * @param squ2 1
+     * @param squ1 square
+     * @param squ2 square
      * @return 1
      */
     public boolean intersectSquareSquare(Square squ1,Square squ2){
@@ -826,8 +831,8 @@ public class Clevis {
     }
 
     /**
-     * @param cir  1
-     * @param squ 1
+     * @param cir circle
+     * @param squ square
      * @return 1
      */
     public boolean intersectCircleSquare(Circle cir,Square squ){
@@ -837,8 +842,8 @@ public class Clevis {
     }
 
     /**
-     * @param squ  1
-     * @param rec 1
+     * @param squ  square
+     * @param rec rectangle
      * @return 1
      */
     public boolean intersectSquareRectangle(Square squ,Rectangle rec){
@@ -847,7 +852,7 @@ public class Clevis {
     }
 
     /**
-     * @param name  1
+     * @param name  name
      * @return 1
      */
     //This method receive the name of a shape
@@ -919,7 +924,7 @@ public class Clevis {
     }
 
     /**
-     * @param currentShape  1
+     * @param currentShape shape
      */
     //List the information of rectangle
     public void listRectangle(Shape currentShape) {
@@ -928,7 +933,7 @@ public class Clevis {
     }
 
     /**
-     * @param currentShape  1
+     * @param currentShape shape
      */
     //List the information of line
     public void listLine(Shape currentShape) {
@@ -937,7 +942,7 @@ public class Clevis {
     }
 
     /**
-     * @param currentShape 1
+     * @param currentShape shape
      */
     //List the information of Circle
     public void listCircle(Shape currentShape) {
@@ -946,7 +951,7 @@ public class Clevis {
     }
 
     /**
-     * @param currentShape 1
+     * @param currentShape shape
      */
     //List the information of Square
     public void listSquare(Shape currentShape) {
@@ -955,7 +960,7 @@ public class Clevis {
     }
 
     /**
-     * @param currentShape 1
+     * @param currentShape shape
      */
     //List the information of Group
     public void listGroup(Shape currentShape) {
@@ -992,8 +997,8 @@ public class Clevis {
     }
 
     /**
-     * @param x 1
-     * @param y 1
+     * @param x x-axis of point
+     * @param y y-axis of point
      * @return 1
      */
     //This method will return shape with biggest z-order contain the point(x,y)
@@ -1017,7 +1022,7 @@ public class Clevis {
     }
 
     /**
-     * @param name  1
+     * @param name name of shape
      * @return 1
      */
     //This method will return shape with the name
@@ -1044,7 +1049,7 @@ public class Clevis {
 
 
     /**
-     * @param str 1
+     * @param str string
      * @return 1
      */
     public boolean isAllNumber(String str) {
@@ -1074,10 +1079,10 @@ public class Clevis {
     }
 
     /**
-     * @param a  1
-     * @param low 1
-     * @param mid 1
-     * @param high 1
+     * @param a a shape array
+     * @param low start position
+     * @param mid middle position
+     * @param high end position
      */
     public void merge(Shape a[], int low, int mid, int high) {
         Shape[] left = new Shape[mid-low + 1];
@@ -1095,7 +1100,7 @@ public class Clevis {
     }
 
     /**
-     * @param newStorage 1
+     * @param newStorage new storage
      */
     public void setStorage(HashMap<String,Shape> newStorage) {
         this.storage = newStorage;
