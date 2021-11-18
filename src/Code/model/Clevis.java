@@ -842,7 +842,7 @@ public class Clevis {
      * @return 1
      */
     public boolean intersectSquareRectangle(Square squ,Rectangle rec){
-        Rectangle temp=new Rectangle("temp",squ.getX() ,squ.getY() ,squ.getW() ,squ.getL() );
+        Rectangle temp=new Rectangle("temp",squ.getX() ,squ.getY() ,squ.getL() ,squ.getL() );
         return intersectRectangleRectangle(temp,rec);
     }
 
