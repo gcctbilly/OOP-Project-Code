@@ -29,6 +29,9 @@ public class Clevis {
      * int operationIndex: This variable is used to record how many command that the use input.
      */
     public static final int INT = 16;
+    /**
+     * B is the constant of 0.5
+     */
     public static final double B = 0.5;
     private DecimalFormat  df=new DecimalFormat("0.00");
 
