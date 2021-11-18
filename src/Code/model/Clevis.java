@@ -26,7 +26,7 @@ public class Clevis {
     /**
      *
      */
-    private DecimalFormat  df=new DecimalFormat("#.00");
+    private DecimalFormat  df=new DecimalFormat("0.00");
 
     private HashMap<String, Shape> storage;
     private String filePathHtml ="";
@@ -192,7 +192,11 @@ public class Clevis {
             String name1 = commands[1];
             String name2 = commands[2];
             boolean isSuccess = intersect(name1,name2);
-            if(isSuccess) return 1;
+            if(isSuccess){
+                System.out.println(name1 + " and "+ name2 + " intersect");
+                return 1;
+            }
+            System.out.println(name1 + " and "+ name2 + " do not intersect");
             return 0;
         }
         else if(commands[0].equals("list")){
@@ -407,6 +411,10 @@ public class Clevis {
     public int createGroup(String name, String[] addName) {
         HashMap<String,Shape> add = new HashMap<>();
         HashMap<String,Shape> addAll = new HashMap<>();
+        if(findShape(name) != null){
+            System.out.println("The name has already existed. This time will not create the group");
+            return 0;
+        }
         for(int i = 0; i < addName.length; i++) {
             if (!storage.containsKey(addName[i])) {
                 System.out.println("The "+ addName[i] + " does not exist. This time will not create the group" );
@@ -888,7 +896,7 @@ public class Clevis {
         mergeSort(a,0,a.length-1);
         for(int i = 0; i < a.length; i++) {
             currentShape = a[i];
-            System.out.println(i + ": ");
+            System.out.println(i+1 + ": ");
             if(currentShape.getClass().getSimpleName().equals("Rectangle")) {
                 listRectangle(currentShape);
             }
@@ -962,19 +970,19 @@ public class Clevis {
                 System.out.print("    ("+i + "): ");
                 listRectangle(oneShape);
             }
-            else if(currentShape.getClass().getSimpleName().equals("Line")) {
+            else if(oneShape.getClass().getSimpleName().equals("Line")) {
                 System.out.print("    ("+i + "): ");
                 listLine(oneShape);
             }
-            else if(currentShape.getClass().getSimpleName().equals("Circle")) {
+            else if(oneShape.getClass().getSimpleName().equals("Circle")) {
                 System.out.print("    ("+i + "): ");
                 listCircle(oneShape);
             }
-            else if(currentShape.getClass().getSimpleName().equals("Square")) {
+            else if(oneShape.getClass().getSimpleName().equals("Square")) {
                 System.out.print("    ("+i + "): ");
                 listSquare(oneShape);
             }
-            else if (currentShape.getClass().getSimpleName().equals("Group")) {
+            else if (oneShape.getClass().getSimpleName().equals("Group")) {
                 System.out.print("    ("+i + "): " + "Group: ");
                 System.out.println("This is a group shape and name is:" + ((Group)oneShape).getName());
             }
