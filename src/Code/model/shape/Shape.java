@@ -1,7 +1,7 @@
 package Code.model.shape;
 
 /**
- * description is in the report
+ * This class is an abstract class. It stipulates some methods that need to be realized in its child class
  */
 public abstract class Shape {
     private static int zOrder = 0;

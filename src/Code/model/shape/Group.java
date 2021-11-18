@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- *
+ *This class is group class, this class is used to created a group according to user’s commands.
  */
 public class Group extends Shape{
     private String name;

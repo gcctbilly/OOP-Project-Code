@@ -5,7 +5,7 @@ import Code.model.Clevis;
 import java.util.Scanner;
 
 /**
- * description is in the report
+ * There are no functions and methods in the class. This class is used to present the     user interface and run the software
  */
 public class Application {
     /**

@@ -1,7 +1,8 @@
 package Code.model.shape;
 
 /**
- * description is in the report
+ * This class is a circle class. This class is used to create a circle according
+ * to user commands. And some functions need to call methods in this class.
  */
 public class Circle extends Shape{
     /**

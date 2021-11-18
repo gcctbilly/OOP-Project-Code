@@ -60,8 +60,8 @@ public class Rectangle extends Shape{
 
     /**
      *
-     * @param a
-     * @param b
+     * @param a x
+     * @param b y
      * @return true/false
      */
     //judge whether this object contains the point(x,y)

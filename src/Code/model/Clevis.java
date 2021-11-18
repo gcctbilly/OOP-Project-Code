@@ -505,7 +505,7 @@ public class Clevis {
         Shape currentShape = storage.get(name);
         Rectangle boundingBox = currentShape.boundingBox();
         System.out.println("The bounding box is:");
-        System.out.println("name: " + boundingBox.getName() + " x:" + boundingBox.getX() + " y:" + boundingBox.getY() + " w:" + boundingBox.getW() + " h:" + boundingBox.getH());
+        System.out.println(" x:" + boundingBox.getX() + " y:" + boundingBox.getY() + " w:" + boundingBox.getW() + " h:" + boundingBox.getH());
         return 1;
     }
 
