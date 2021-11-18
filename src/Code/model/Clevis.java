@@ -753,7 +753,7 @@ public class Clevis {
         double dist= Math.pow(Math .pow(cir1.getX()-cir2.getX() ,2)+ Math.pow(cir1.getY()- cir2.getY(),2),B);
         double maxR= Math.max(cir1 .getR() ,cir2 .getR() );
         double minR= Math.min(cir1.getR() , cir2.getR());
-        if(dist>maxR -minR && dist<maxR +minR ){
+        if(dist>=maxR -minR && dist<=maxR +minR ){
             return true;
         }else{
             return false;
