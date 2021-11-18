@@ -14,9 +14,16 @@ public class ClevisTest{
     Rectangle rec3;
     Square squ1;
     Circle cir1;
+    Circle cir2;
     Group gro1;
     Group gro2;
+    Group gro3;
     Line lin1;
+    Line lin2;
+    Square squ2;
+    Circle cir3;
+    Square squ3;
+    Circle cir4;
     HashMap<String,Shape> storage;
 
     Clevis application = new Clevis();
@@ -29,6 +36,13 @@ public class ClevisTest{
         lin1 = new Line("test4",0,0,2,0);
         rec2 = new Rectangle("test5",1,1,2,2);
         rec3 = new Rectangle("test8",3,1,2,2);
+        cir2 = new Circle("test10",0,0,3);
+        lin2 = new Line("test11", -7,0,7,0);
+        squ2 = new Square("test12",-2,2,4);
+        squ3 = new Square("test13",-2,0,3);
+        cir3 = new Circle("test14",0,1,4);
+        cir4 = new Circle("test16",0,1,4);
+
 
         HashMap<String,Shape> shapes = new HashMap<>();
         shapes.put("test3", cir1);
@@ -44,10 +58,22 @@ public class ClevisTest{
         allShapes2.put("test5", rec2);
         gro2 = new Group("test7",shapes,allShapes2);
 
+        HashMap<String,Shape> shapes3 = new HashMap<>();
+        shapes3.put("test13", squ3);
+        shapes3.put("test14", cir3);
+        HashMap<String,Shape> allShapes3 = new HashMap<>();
+        allShapes3.putAll(shapes);
+        gro3 = new Group("test15",shapes3,allShapes3);
+
         storage.put("test1",rec1);
         storage.put("test2",squ1);
         storage.put("test7",gro2);
         storage.put("test8",rec3);
+        storage.put("test10",cir2);
+        storage.put("test11",lin2);
+        storage.put("test12",squ2 );
+        storage.put("test15",gro3 );
+        storage.put("test16",cir4 );
         application.setStorage(storage);
 
     }
@@ -252,12 +278,29 @@ public class ClevisTest{
         int number3 = application.process("intersect a b");
         int number4 = application.process("intersect test1 test8");
         int number5 = application.process("intersect test1 test2");
+        int number6 = application.process("intersect test7 test1") ;
+        int number7 = application.process("intersect test7 test10") ;
+        int number8 = application.process("intersect test10 test11") ;
+        int number9 = application.process("intersect test7 test11") ;
+        int number10 = application.process("intersect test7 test12") ;
+        int number11 = application.process("intersect test7 test15") ;
+        int number12 = application.process("intersect test16 test10") ;
+
 
         assertEquals(0,number1);
         assertEquals(0,number2);
         assertEquals(0,number3);
         assertEquals(0,number4);
         assertEquals(1,number5);
+        assertEquals(1,number6);
+        assertEquals(1,number7);
+        assertEquals(1,number8);
+        assertEquals(1,number9);
+        assertEquals(1,number10);
+        assertEquals(1,number11);
+        assertEquals(1,number12);
+
+
     }
 
     @Test
